@@ -101,7 +101,7 @@ function renderToString(vnode, context, opts, inner, isSvgMode, selectValue) {
 				c.context = context;
 				if (nodeName.getDerivedStateFromProps) c.state = assign(assign({}, c.state), nodeName.getDerivedStateFromProps(c.props, c.state));
 				else if (c.componentWillMount) c.componentWillMount();
-				rendered = c.render(c.props, c.state, c.context);
+				rendered = c.render(c.props, c.state || {}, c.context);
 			}
 
 			if (c.getChildContext) {
@@ -215,7 +215,7 @@ function renderToString(vnode, context, opts, inner, isSvgMode, selectValue) {
 				if (ret) {
 					if (pretty) {
 						let isText = ret.length > 0 && ret[0]!='<';
-						
+
 						// We merge adjacent text nodes, otherwise each piece would be printed
 						// on a new line.
 						if (lastWasText && isText) {
